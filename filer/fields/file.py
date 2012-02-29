@@ -4,6 +4,7 @@ from django.utils.text import truncate_words
 from django.db import models
 from django import forms
 from django.contrib.admin.widgets import ForeignKeyRawIdWidget
+from django.contrib.admin import site
 from django.core.urlresolvers import reverse
 from django.utils.safestring import mark_safe
 from filer.settings import FILER_STATICMEDIA_PREFIX
@@ -100,7 +101,7 @@ class AdminFileFormField(forms.ModelChoiceField):
         self.max_value = None
         self.min_value = None
         other_widget = kwargs.pop('widget', None)
-        forms.Field.__init__(self, widget=self.widget(rel), *args, **kwargs)
+        forms.Field.__init__(self, widget=self.widget(rel, site))
         
     def widget_attrs(self, widget):
         widget.required = self.required
